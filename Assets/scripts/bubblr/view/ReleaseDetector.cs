@@ -3,7 +3,7 @@ using UnityEngine;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 
-public class ReleaseDetector : EventView
+public class ReleaseDetector : MouseDetector
 {
     public Signal releaseSignal = new Signal();
 

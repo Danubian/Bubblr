@@ -38,8 +38,7 @@ public class GameContext : MVCSContext {
 	protected override void mapBindings()
 	{
 		//Injection binding.
-		//Map a mock model and a mock service, both as Singletons
-		//injectionBinder.Bind<IExampleModel>().To<ExampleModel>().ToSingleton();
+		//injectionBinder.Bind<IMouseModel>().To<MouseModel>().ToSingleton();
 		//injectionBinder.Bind<IExampleService>().To<ExampleService>().ToSingleton();
 
 		//View/Mediator binding
@@ -57,6 +56,6 @@ public class GameContext : MVCSContext {
 		//The START event is fired as soon as mappings are complete.
 		//Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
 		//commandBinder.Bind(ContextEvent.START).To<StartCommand>().Once ();
-
+        //commandBinder.Bind<RequestMouseUpdateSignal>().To<MouseUpdateCommand>();
 	}
 }

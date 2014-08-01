@@ -3,7 +3,7 @@ using UnityEngine;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 
-public class ClickDetector : EventView
+public class ClickDetector : MouseDetector
 {
     public Signal clickSignal = new Signal();
 

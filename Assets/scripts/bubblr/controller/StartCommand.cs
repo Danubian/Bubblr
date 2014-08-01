@@ -16,11 +16,11 @@ public class StartCommand : Command
     public override void Execute()
     {
         Debug.Log("Executing StartCommand");
-        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        go.name = "Ball";
+        GameObject go = (GameObject) GameObject.Instantiate(Resources.Load("Circle"));
+        go.name = "Circle";
+
         go.AddComponent<BallView>();
         go.transform.parent = contextView.transform;
-        go.transform.localScale = new Vector3(1, 1, 0.1f);
     }
 }
 

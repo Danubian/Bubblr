@@ -13,7 +13,13 @@ public class BallView : View
 
     public Signal dragSignal = new Signal();
 
+    public Signal releaseSignal = new Signal();
+
     GameObject latestGO;
+
+    public Vector3 lastPosition = Vector3.zero;
+
+    public Vector3 velocity = Vector3.zero;
 
     internal void init()
     {
@@ -49,11 +55,16 @@ public class BallView : View
         this.gameObject.AddComponent<DragDetector>();
         DragDetector dragger = this.gameObject.GetComponent<DragDetector>() as DragDetector;
         dragger.dragSignal.AddListener(onDrag);
+
+        this.gameObject.AddComponent<ReleaseDetector>();
+        ReleaseDetector releaser = this.gameObject.GetComponent<ReleaseDetector>() as ReleaseDetector;
+        releaser.releaseSignal.AddListener(onReleased);
     }
 
     void Update()
     {
         //transform.Rotate(Vector3.up * Time.deltaTime * theta, Space.Self);
+        transform.position += velocity;
     }
 
     void onClick()
@@ -66,5 +77,11 @@ public class BallView : View
     {
         Debug.Log("BallView : onDrag");
         dragSignal.Dispatch();
+    }
+
+    void onReleased()
+    {
+        Debug.Log("BallView : onReleased");
+        releaseSignal.Dispatch();
     }
 }

@@ -13,6 +13,9 @@ public class BallMediator : Mediator
     [Inject]
     public BallView view { get; set; }
 
+    //[Inject]
+    //public IMouseModel model { get; set; }
+
     public override void OnRegister()
     {
 
@@ -20,6 +23,8 @@ public class BallMediator : Mediator
         view.clickSignal.AddListener(onViewClicked);
 
         view.dragSignal.AddListener(onViewDragged);
+
+        view.releaseSignal.AddListener(onViewReleased);
 
         view.init();
     }
@@ -29,6 +34,8 @@ public class BallMediator : Mediator
         view.clickSignal.RemoveListener(onViewClicked);
 
         view.dragSignal.RemoveListener(onViewDragged);
+
+        view.releaseSignal.RemoveListener(onViewReleased);
 
         Debug.Log("Mediator OnRemove");
     }
@@ -46,13 +53,23 @@ public class BallMediator : Mediator
 
     private void onViewDragged()
     {
-        Debug.Log("BallMediator : View click detected");
+        Debug.Log("BallMediator : View dragged detected");
+        view.lastPosition = view.transform.position;
+
         Vector3 pos = Input.mousePosition;
         pos = Camera.main.ScreenToWorldPoint(pos);
         pos.z = 0;
         view.transform.position = pos;
+
+        view.velocity = Vector3.zero;
         //Dispatch a Signal. We're adding a string value (different from MyFirstContext,
         //just to show how we can Inject values into commands)
+    }
+
+    private void onViewReleased()
+    {
+        Debug.Log("BallMediator : View released detected");
+        view.velocity = view.transform.position - view.lastPosition;
     }
 }
 
