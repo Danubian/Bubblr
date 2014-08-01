@@ -9,6 +9,7 @@ public class ClickDetector : EventView
 
     void OnMouseDown()
     {
+        Debug.Log("ClickDetector : Mouse Down");
         clickSignal.Dispatch();
     }
 }

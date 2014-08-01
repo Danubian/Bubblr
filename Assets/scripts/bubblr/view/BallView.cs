@@ -11,12 +11,15 @@ public class BallView : View
 {
     public Signal clickSignal = new Signal();
 
+    public Signal dragSignal = new Signal();
+
     GameObject latestGO;
 
     internal void init()
     {
+        Debug.Log("Initializing BallView");
         //latestGO = Instantiate(Resources.Load("Textfield")) as GameObject;
-        //GameObject go = latestGO;
+        //GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //go.name = "first";
 
         //TextMesh textMesh = go.GetComponent<TextMesh>();
@@ -37,9 +40,15 @@ public class BallView : View
 
         //go.transform.parent = gameObject.transform;
 
-        //go.AddComponent<ClickDetector>();
-        //ClickDetector clicker = go.GetComponent<ClickDetector>() as ClickDetector;
-        //clicker.clickSignal.AddListener(onClick);
+        Debug.Log(this.gameObject);
+
+        this.gameObject.AddComponent<ClickDetector>();
+        ClickDetector clicker = this.gameObject.GetComponent<ClickDetector>() as ClickDetector;
+        clicker.clickSignal.AddListener(onClick);
+
+        this.gameObject.AddComponent<DragDetector>();
+        DragDetector dragger = this.gameObject.GetComponent<DragDetector>() as DragDetector;
+        dragger.dragSignal.AddListener(onDrag);
     }
 
     void Update()
@@ -49,6 +58,13 @@ public class BallView : View
 
     void onClick()
     {
+        Debug.Log("BallView : onClick");
         clickSignal.Dispatch();
+    }
+
+    void onDrag()
+    {
+        Debug.Log("BallView : onDrag");
+        dragSignal.Dispatch();
     }
 }

@@ -1,6 +1,7 @@
 ﻿/// The only change in StartCommand is that we extend Command, not EventCommand
 
 using System;
+using System.Collections;
 using UnityEngine;
 using strange.extensions.context.api;
 using strange.extensions.command.impl;
@@ -14,10 +15,12 @@ public class StartCommand : Command
 
     public override void Execute()
     {
-        GameObject go = new GameObject();
-        go.name = "BallView";
+        Debug.Log("Executing StartCommand");
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        go.name = "Ball";
         go.AddComponent<BallView>();
         go.transform.parent = contextView.transform;
+        go.transform.localScale = new Vector3(1, 1, 0.1f);
     }
 }
 

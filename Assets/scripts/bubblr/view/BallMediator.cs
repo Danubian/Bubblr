@@ -19,18 +19,38 @@ public class BallMediator : Mediator
         //Listen to the view for a Signal
         view.clickSignal.AddListener(onViewClicked);
 
+        view.dragSignal.AddListener(onViewDragged);
+
         view.init();
     }
 
     public override void OnRemove()
     {
         view.clickSignal.RemoveListener(onViewClicked);
+
+        view.dragSignal.RemoveListener(onViewDragged);
+
         Debug.Log("Mediator OnRemove");
     }
 
     private void onViewClicked()
     {
-        Debug.Log("View click detected");
+        Debug.Log("BallMediator : View click detected");
+        //Vector3 pos = Input.mousePosition;
+        //pos = Camera.main.ScreenToWorldPoint(pos);
+        //pos.z = 0;
+        //view.transform.position = pos;
+        //Dispatch a Signal. We're adding a string value (different from MyFirstContext,
+        //just to show how we can Inject values into commands)
+    }
+
+    private void onViewDragged()
+    {
+        Debug.Log("BallMediator : View click detected");
+        Vector3 pos = Input.mousePosition;
+        pos = Camera.main.ScreenToWorldPoint(pos);
+        pos.z = 0;
+        view.transform.position = pos;
         //Dispatch a Signal. We're adding a string value (different from MyFirstContext,
         //just to show how we can Inject values into commands)
     }
