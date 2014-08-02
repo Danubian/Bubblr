@@ -63,8 +63,9 @@ public class BallView : View
 
     void Update()
     {
+
         //transform.Rotate(Vector3.up * Time.deltaTime * theta, Space.Self);
-        transform.position += velocity;
+        //transform.position += velocity;
     }
 
     void onClick()

@@ -69,7 +69,12 @@ public class BallMediator : Mediator
     private void onViewReleased()
     {
         Debug.Log("BallMediator : View released detected");
-        view.velocity = view.transform.position - view.lastPosition;
+        //view.velocity = view.transform.position - view.lastPosition;
+        Debug.Log(view.rigidbody2D);
+        var multiply = 10;
+        Vector2 force = (view.transform.position - view.lastPosition)*multiply;
+        Debug.Log(force);
+        view.rigidbody2D.AddForce(force);
     }
 }
 
