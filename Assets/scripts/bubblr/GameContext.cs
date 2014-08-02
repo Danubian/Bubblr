@@ -46,11 +46,13 @@ public class GameContext : MVCSContext {
 		//Fires its Awake method. The Mediator communicates to/from the View
 		//and to/from the App. This keeps dependencies between the view and the app
 		//separated.
+        mediationBinder.Bind<WorldView>().To<WorldMediator>();
 		mediationBinder.Bind<BallView>().To<BallMediator>();
 
         //StartSignal is now fired instead of the START event.
         //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
         commandBinder.Bind<StartSignal>().To<StartCommand>().Once();
+        commandBinder.Bind<RequestBallCreationSignal>().To<CreateBallCommand>();
 		//Event/Command binding
 		//commandBinder.Bind(ExampleEvent.REQUEST_WEB_SERVICE).To<CallWebServiceCommand>();
 		//The START event is fired as soon as mappings are complete.

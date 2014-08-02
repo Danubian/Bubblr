@@ -47,17 +47,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\bubblr\controller\CreateBallCommand.cs" />
     <Compile Include="Assets\scripts\bubblr\GameContext.cs" />
     <Compile Include="Assets\scripts\bubblr\GameRoot.cs" />
     <Compile Include="Assets\scripts\bubblr\controller\StartCommand.cs" />
     <Compile Include="Assets\scripts\bubblr\model\vo\BallVO.cs" />
+    <Compile Include="Assets\scripts\bubblr\signal\RequestBallCreationSignal.cs" />
     <Compile Include="Assets\scripts\bubblr\signal\StartSignal.cs" />
     <Compile Include="Assets\scripts\bubblr\view\BallMediator.cs" />
     <Compile Include="Assets\scripts\bubblr\view\BallView.cs" />
+    <Compile Include="Assets\scripts\bubblr\view\CollisionDetector.cs" />
     <Compile Include="Assets\scripts\bubblr\view\MouseDetector.cs" />
     <Compile Include="Assets\scripts\bubblr\view\ReleaseDetector.cs" />
     <Compile Include="Assets\scripts\bubblr\view\ClickDetector.cs" />
     <Compile Include="Assets\scripts\bubblr\view\DragDetector.cs" />
+    <Compile Include="Assets\scripts\bubblr\view\WorldMediator.cs" />
+    <Compile Include="Assets\scripts\bubblr\view\WorldView.cs" />
     <Compile Include="Assets\scripts\strange\ReadMe.cs" />
     <Compile Include="Assets\scripts\strange\extensions\command\api\CommandExceptionType.cs" />
     <Compile Include="Assets\scripts\strange\extensions\command\api\CommandKeys.cs" />

@@ -15,6 +15,8 @@ public class BallView : View
 
     public Signal releaseSignal = new Signal();
 
+    public Signal<Collision2D> collisionSignal = new Signal<Collision2D>();
+
     GameObject latestGO;
 
     public Vector3 lastPosition = Vector3.zero;
@@ -59,6 +61,10 @@ public class BallView : View
         this.gameObject.AddComponent<ReleaseDetector>();
         ReleaseDetector releaser = this.gameObject.GetComponent<ReleaseDetector>() as ReleaseDetector;
         releaser.releaseSignal.AddListener(onReleased);
+
+        this.gameObject.AddComponent<CollisionDetector>();
+        CollisionDetector collisionDetector = this.gameObject.GetComponent<CollisionDetector>() as CollisionDetector;
+        collisionDetector.collisionSignal.AddListener(onCollision);
     }
 
     void Update()
@@ -66,6 +72,12 @@ public class BallView : View
 
         //transform.Rotate(Vector3.up * Time.deltaTime * theta, Space.Self);
         //transform.position += velocity;
+    }
+
+    void onCollision(Collision2D coll)
+    {
+        Debug.Log("BallView : onCollision");
+        collisionSignal.Dispatch(coll);
     }
 
     void onClick()

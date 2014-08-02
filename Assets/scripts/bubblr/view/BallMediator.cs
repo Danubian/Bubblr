@@ -18,8 +18,8 @@ public class BallMediator : Mediator
 
     public override void OnRegister()
     {
+        view.collisionSignal.AddListener(onViewCollision);
 
-        //Listen to the view for a Signal
         view.clickSignal.AddListener(onViewClicked);
 
         view.dragSignal.AddListener(onViewDragged);
@@ -31,13 +31,18 @@ public class BallMediator : Mediator
 
     public override void OnRemove()
     {
+        Debug.Log("BallMediator : OnRemove");
+
         view.clickSignal.RemoveListener(onViewClicked);
 
         view.dragSignal.RemoveListener(onViewDragged);
 
         view.releaseSignal.RemoveListener(onViewReleased);
+    }
 
-        Debug.Log("Mediator OnRemove");
+    private void onViewCollision(Collision2D coll)
+    {
+        Debug.Log("BallMediator : onViewCollision");
     }
 
     private void onViewClicked()
