@@ -13,6 +13,9 @@ public class BallMediator : Mediator
     [Inject]
     public BallView view { get; set; }
 
+    [Inject]
+    public NotifyBallClickedSignal ballClicked { get; set; }
+
     //[Inject]
     //public IMouseModel model { get; set; }
 
@@ -48,6 +51,8 @@ public class BallMediator : Mediator
     private void onViewClicked()
     {
         Debug.Log("BallMediator : View click detected");
+
+        ballClicked.Dispatch(true);
         //Vector3 pos = Input.mousePosition;
         //pos = Camera.main.ScreenToWorldPoint(pos);
         //pos.z = 0;
@@ -80,6 +85,8 @@ public class BallMediator : Mediator
         Vector2 force = (view.transform.position - view.lastPosition)*multiply;
         Debug.Log(force);
         view.rigidbody2D.AddForce(force);
+
+        ballClicked.Dispatch(false);
     }
 }
 

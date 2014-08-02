@@ -10,6 +10,10 @@ public class CollisionDetector : EventView
     void OnCollisionEnter2D(Collision2D coll)
     {
         Debug.Log("CollisionDetector : OnCollisionEnter2D");
+        //GameObject go = (GameObject) GameObject.Instantiate(Resources.Load("Audio"));
+        //AudioSource sound = gameObject.GetComponent<AudioSource>();
+        //sound.Play();
+
         collisionSignal.Dispatch(coll);
     }
 }   

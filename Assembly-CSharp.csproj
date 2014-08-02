@@ -50,7 +50,11 @@
      <Compile Include="Assets\scripts\bubblr\GameRoot.cs" />
      <Compile Include="Assets\scripts\bubblr\controller\CreateBallCommand.cs" />
      <Compile Include="Assets\scripts\bubblr\controller\StartCommand.cs" />
+     <Compile Include="Assets\scripts\bubblr\controller\UpdateMouseCommand.cs" />
+     <Compile Include="Assets\scripts\bubblr\model\api\IMouseModel.cs" />
+     <Compile Include="Assets\scripts\bubblr\model\impl\MouseModel.cs" />
      <Compile Include="Assets\scripts\bubblr\model\vo\BallVO.cs" />
+     <Compile Include="Assets\scripts\bubblr\signal\NotifyBallClickedSignal.cs" />
      <Compile Include="Assets\scripts\bubblr\signal\RequestBallCreationSignal.cs" />
      <Compile Include="Assets\scripts\bubblr\signal\StartSignal.cs" />
      <Compile Include="Assets\scripts\bubblr\view\BallMediator.cs" />

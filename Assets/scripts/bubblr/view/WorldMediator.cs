@@ -9,6 +9,9 @@ public class WorldMediator : Mediator
     public WorldView view { get; set; }
 
     [Inject]
+    public IMouseModel mouseModel { get; set; }
+
+    [Inject]
     public RequestBallCreationSignal createBall { get; set; }
 
     public override void OnRegister()
@@ -28,6 +31,7 @@ public class WorldMediator : Mediator
     public void onMouseDown()
     {
         Debug.Log("WorldMediator : onMouseDown");
-        createBall.Dispatch();
+        if(!mouseModel.clicking)
+            createBall.Dispatch();
     }
 }
