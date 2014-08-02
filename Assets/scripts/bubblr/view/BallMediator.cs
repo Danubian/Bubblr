@@ -46,6 +46,46 @@ public class BallMediator : Mediator
     private void onViewCollision(Collision2D coll)
     {
         Debug.Log("BallMediator : onViewCollision");
+        Debug.Log("coll.transform : " + coll.transform);
+        String collName = coll.gameObject.name;
+        Debug.Log(collName + " Collision");
+        if (collName.Contains("Wall"))
+        {
+            Debug.Log("Collided with a wall");
+        }
+        else if (collName.Contains("Circle"))
+        {
+            Debug.Log("Collided with a ball");
+            if(view.rigidbody2D.mass == coll.rigidbody.mass)
+            {
+                view.rigidbody2D.mass += coll.rigidbody.mass;
+
+                float area = view.rigidbody2D.mass;
+
+                float r = (float)Math.Sqrt(area / Math.PI);
+
+                view.transform.localScale = Vector2.one * r;
+                GameObject.Destroy(coll.gameObject);
+            }
+            else if (view.rigidbody2D.mass * 2 == coll.rigidbody.mass ||
+              view.rigidbody2D.mass == coll.rigidbody.mass * 2)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            Debug.Log("Something else?");
+        }
+        AudioSource sound = view.GetComponent<AudioSource>();
+        sound.Play();
+        Debug.Log("coll.relativeVelocity : " + coll.relativeVelocity);
+        
+
     }
 
     private void onViewClicked()
@@ -81,11 +121,11 @@ public class BallMediator : Mediator
         Debug.Log("BallMediator : View released detected");
         //view.velocity = view.transform.position - view.lastPosition;
         Debug.Log(view.rigidbody2D);
-        var multiply = 10;
-        Vector2 force = (view.transform.position - view.lastPosition)*multiply;
+        var multiply = 1000;
+        Vector2 force = view.rigidbody2D.mass*(view.transform.position - view.lastPosition)*multiply;
         Debug.Log(force);
         view.rigidbody2D.AddForce(force);
-
+        
         ballClicked.Dispatch(false);
     }
 }
