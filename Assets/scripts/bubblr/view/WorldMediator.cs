@@ -31,7 +31,13 @@ public class WorldMediator : Mediator
     public void onMouseDown()
     {
         Debug.Log("WorldMediator : onMouseDown");
-        if(!mouseModel.clicking)
-            createBall.Dispatch();
+        if (!mouseModel.clicking)
+        {
+            Vector3 pos = Input.mousePosition;
+            pos = Camera.main.ScreenToWorldPoint(pos);
+            pos.z = 0;
+            createBall.Dispatch(pos, Vector2.zero);
+        }
+            
     }
 }

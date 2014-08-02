@@ -10,6 +10,12 @@ public class CreateBallCommand : Command
     [Inject(ContextKeys.CONTEXT_VIEW)]
     public GameObject contextView { get; set; }
 
+    [Inject]
+    public Vector2 pos { get; set; }
+
+    [Inject]
+    public Vector3 force { get; set; }
+
     public override void Execute()
     {
         Debug.Log("Executing CreateBallCommand");
@@ -19,11 +25,10 @@ public class CreateBallCommand : Command
         go.AddComponent<BallView>();
         go.transform.parent = contextView.transform;
 
-        Vector3 pos = Input.mousePosition;
-        pos = Camera.main.ScreenToWorldPoint(pos);
-        pos.z = 0;
+        
 
         go.transform.position = pos;
+        go.rigidbody2D.AddForce(go.rigidbody2D.mass * force, ForceMode2D.Force);
 
         //GameObject go2 = new GameObject();
         //go2.name = "WorldView";

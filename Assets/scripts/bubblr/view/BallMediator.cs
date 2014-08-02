@@ -16,6 +16,9 @@ public class BallMediator : Mediator
     [Inject]
     public NotifyBallClickedSignal ballClicked { get; set; }
 
+    [Inject]
+    public RequestBallCreationSignal createBall { get; set; }
+
     //[Inject]
     //public IMouseModel model { get; set; }
 
@@ -58,22 +61,50 @@ public class BallMediator : Mediator
             Debug.Log("Collided with a ball");
             if(view.rigidbody2D.mass == coll.rigidbody.mass)
             {
-                view.rigidbody2D.mass += coll.rigidbody.mass;
-
-                float area = view.rigidbody2D.mass;
+                float m1 = view.rigidbody2D.mass;
+                Vector2 v1 = view.rigidbody2D.velocity;
+                float m2 = coll.rigidbody.mass;
+                Vector2 v2 = coll.rigidbody.velocity;
+                float M = m1 + m2;
+                
+                float area = M;
+                Debug.Log(M);
 
                 float r = (float)Math.Sqrt(area / Math.PI);
 
                 view.transform.localScale = Vector2.one * r;
+                
+                Debug.Log(v1);
+                Debug.Log(v2);
+                Vector2 vf = coll.relativeVelocity / 2 / Time.fixedDeltaTime;
+                Debug.Log(vf);
+                view.rigidbody2D.AddForce(M*vf, ForceMode2D.Force);
+
+
+                view.rigidbody2D.mass = M;
+
+                view.transform.position = (view.transform.position + coll.transform.position) / 2;
                 GameObject.Destroy(coll.gameObject);
             }
-            else if (view.rigidbody2D.mass * 2 == coll.rigidbody.mass ||
-              view.rigidbody2D.mass == coll.rigidbody.mass * 2)
+            else if (   view.rigidbody2D.mass * 2 == coll.rigidbody.mass ||
+                        view.rigidbody2D.mass == coll.rigidbody.mass * 2)
             {
 
             }
             else
             {
+                Vector2 pos = coll.transform.position;
+                float r = (float)Math.Sqrt(coll.rigidbody.mass / Math.PI);
+                Vector2 vel = coll.relativeVelocity / Time.fixedDeltaTime;
+                Vector2 inverse = new Vector2(-vel.y, vel.x);
+
+                createBall.Dispatch(pos + new Vector2(r, 0), vel/2);
+                createBall.Dispatch(pos + new Vector2(-r, 0), vel/-2);
+                createBall.Dispatch(pos + new Vector2(0, r), inverse/2);
+                createBall.Dispatch(pos + new Vector2(0, -r), inverse / -2);
+
+                GameObject.Destroy(coll.gameObject);
+                GameObject.Destroy(view.gameObject);
 
             }
         }
@@ -121,10 +152,11 @@ public class BallMediator : Mediator
         Debug.Log("BallMediator : View released detected");
         //view.velocity = view.transform.position - view.lastPosition;
         Debug.Log(view.rigidbody2D);
-        var multiply = 1000;
-        Vector2 force = view.rigidbody2D.mass*(view.transform.position - view.lastPosition)*multiply;
+        var multiplier = 10;
+        Vector2 force = view.rigidbody2D.mass * (view.transform.position - view.lastPosition) * multiplier / Time.fixedDeltaTime;
         Debug.Log(force);
-        view.rigidbody2D.AddForce(force);
+        view.rigidbody2D.velocity = Vector2.zero;
+        view.rigidbody2D.AddForce(force, ForceMode2D.Force);
         
         ballClicked.Dispatch(false);
     }
